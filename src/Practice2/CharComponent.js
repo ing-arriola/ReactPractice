@@ -1,6 +1,6 @@
 import React from "react";
 
-const CharComponent = ({ char }) => {
+const CharComponent = ({ char, click }) => {
   const style = {
     color: "red",
     display: "inline-block",
@@ -9,7 +9,11 @@ const CharComponent = ({ char }) => {
     margin: "16px",
     border: "1px solid black",
   };
-  return <div style={style}>{char}</div>;
+  return (
+    <div onClick={click} style={style}>
+      {char}
+    </div>
+  );
 };
 
 export default CharComponent;

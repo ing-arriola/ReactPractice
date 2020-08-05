@@ -61,6 +61,15 @@ function App() {
     });
   };
 
+  const deleteChar = (indexOfCharacter) => {
+    const copyOfChars = [...justString.justSomeChars];
+    copyOfChars.splice(indexOfCharacter, 1);
+    console.log(copyOfChars);
+    setJustString({
+      justSomeChars: copyOfChars,
+    });
+  };
+
   const togglePeople = () => {
     const doesShow = showPeople.showpeople.show;
     setShowPeople({
@@ -80,35 +89,53 @@ function App() {
     });
   };
 
+  const styleButton = {
+    background: "green",
+    color: "#fff",
+  };
+
+  let peopleToShow = null;
+
+  if (showPeople.showpeople.show) {
+    peopleToShow = (
+      <div>
+        {peopleState.people.map((someone, index) => {
+          return (
+            <Person
+              click={() => deleteUser(index)}
+              key={someone.id}
+              name={someone.name}
+              age={someone.age}
+              changed={(e) => changeHandler(e, someone.id)}
+            />
+          );
+        })}
+      </div>
+    );
+    styleButton.background = "red";
+  }
+
   return (
     <div className="App">
-      <button onClick={togglePeople}>Toggle People</button>
-      {showPeople.showpeople.show ? (
-        <div>
-          {peopleState.people.map((someone, index) => {
-            return (
-              <Person
-                click={() => deleteUser(index)}
-                key={someone.id}
-                name={someone.name}
-                age={someone.age}
-                changed={(e) => changeHandler(e, someone.id)}
-              />
-            );
-          })}
-        </div>
-      ) : null}
-
+      <button style={styleButton} onClick={togglePeople}>
+        Toggle People
+      </button>
+      {peopleToShow}
       <UserOutput myname={username.user.name} />
       <UserInput changed={userNameChangeHandler} />
-
       <h2>Practice 2</h2>
-      <input placeholder="insert your text" onChange={getLength} />
+      <input onChange={getLength} value={justString.justSomeChars.join("")} />
       <ValidationComponent tlength={lengthOfString.numChars.characters} />
       {justString.justSomeChars.length > 0 ? (
         <div>
           {justString.justSomeChars.map((ch, index) => {
-            return <CharComponent key={index} char={ch} />;
+            return (
+              <CharComponent
+                key={index}
+                char={ch}
+                click={() => deleteChar(index)}
+              />
+            );
           })}
         </div>
       ) : null}
