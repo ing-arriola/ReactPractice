@@ -6,9 +6,9 @@ import UserInput from "./Person/UserInput";
 function App() {
   const [peopleState, setPeople] = useState({
     people: [
-      { id: 1, name: "Jaime", age: 30 },
-      { id: 2, name: "Raul", age: 20 },
-      { id: 3, name: "Sam", age: 24 },
+      { name: "Jaime", age: 30 },
+      { name: "Raul", age: 20 },
+      { name: "Sam", age: 24 },
     ],
   });
 
@@ -20,7 +20,7 @@ function App() {
     showpeople: { show: true },
   });
 
-  const switchNameHandler = () => {
+  /*const switchNameHandler = () => {
     setPeople({
       people: [
         { name: "Susan", age: 40 },
@@ -30,7 +30,7 @@ function App() {
     });
   };
 
-  const changeHandler = (e) => {
+ const changeHandler = (e) => {
     setPeople({
       people: [
         { name: "Susan", age: 40 },
@@ -39,7 +39,15 @@ function App() {
       ],
     });
   };
+*/
 
+  const deleteUser = (user) => {
+    const copyOfPeople = peopleState.people;
+    copyOfPeople.splice(user, 1);
+    setPeople({
+      people: copyOfPeople,
+    });
+  };
   const userNameChangeHandler = (e) => {
     setUsername({
       user: { name: e.target.value },
@@ -58,9 +66,14 @@ function App() {
       <button onClick={togglePeople}>Toggle People</button>
       {showPeople.showpeople.show ? (
         <div>
-          {peopleState.people.map((someone) => {
+          {peopleState.people.map((someone, index) => {
             return (
-              <Person key={someone.id} name={someone.name} age={someone.age} />
+              <Person
+                click={() => deleteUser(index)}
+                key={index}
+                name={someone.name}
+                age={someone.age}
+              />
             );
           })}
         </div>
