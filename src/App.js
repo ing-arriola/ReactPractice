@@ -3,6 +3,7 @@ import "./App.css";
 import Person from "./Person/Person";
 import UserOutput from "./Person/UserOutput";
 import UserInput from "./Person/UserInput";
+import ValidationComponent from "./Practice2/ValidationComponent";
 function App() {
   const [peopleState, setPeople] = useState({
     people: [
@@ -20,16 +21,10 @@ function App() {
     showpeople: { show: true },
   });
 
-  /*const switchNameHandler = () => {
-    setPeople({
-      people: [
-        { name: "Susan", age: 40 },
-        { name: "Alison", age: 19 },
-        { name: "Jhosseline", age: 25 },
-      ],
-    });
-  };
-*/
+  const [lengthOfString, setlengthOfString] = useState({
+    numChars: { characters: 0 },
+  });
+
   const changeHandler = (e, id) => {
     //I need to know who is the user such name has been changed, so that's why I sent the id
     const userIndex = peopleState.people.findIndex((p) => {
@@ -68,6 +63,12 @@ function App() {
     });
   };
 
+  const getLength = (e) => {
+    setlengthOfString({
+      numChars: { characters: e.target.value.length },
+    });
+  };
+
   return (
     <div className="App">
       <button onClick={togglePeople}>Toggle People</button>
@@ -89,6 +90,10 @@ function App() {
 
       <UserOutput myname={username.user.name} />
       <UserInput changed={userNameChangeHandler} />
+
+      <h2>Practice 2</h2>
+      <input placeholder="insert your text" onChange={getLength} />
+      <ValidationComponent tlength={lengthOfString.numChars.characters} />
     </div>
   );
 }
