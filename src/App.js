@@ -4,6 +4,7 @@ import Person from "./Person/Person";
 import UserOutput from "./Person/UserOutput";
 import UserInput from "./Person/UserInput";
 import ValidationComponent from "./Practice2/ValidationComponent";
+import CharComponent from "./Practice2/CharComponent";
 function App() {
   const [peopleState, setPeople] = useState({
     people: [
@@ -23,6 +24,10 @@ function App() {
 
   const [lengthOfString, setlengthOfString] = useState({
     numChars: { characters: 0 },
+  });
+
+  const [justString, setJustString] = useState({
+    justSomeChars: [],
   });
 
   const changeHandler = (e, id) => {
@@ -64,8 +69,14 @@ function App() {
   };
 
   const getLength = (e) => {
+    let someString = e.target.value;
+    let someChars = someString.split("");
+    console.log(someChars);
     setlengthOfString({
       numChars: { characters: e.target.value.length },
+    });
+    setJustString({
+      justSomeChars: someChars,
     });
   };
 
@@ -94,6 +105,13 @@ function App() {
       <h2>Practice 2</h2>
       <input placeholder="insert your text" onChange={getLength} />
       <ValidationComponent tlength={lengthOfString.numChars.characters} />
+      {justString.justSomeChars.length > 0 ? (
+        <div>
+          {justString.justSomeChars.map((ch, index) => {
+            return <CharComponent key={index} char={ch} />;
+          })}
+        </div>
+      ) : null}
     </div>
   );
 }
