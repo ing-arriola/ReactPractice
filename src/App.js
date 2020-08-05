@@ -6,9 +6,9 @@ import UserInput from "./Person/UserInput";
 function App() {
   const [peopleState, setPeople] = useState({
     people: [
-      { name: "Jaime", age: 30 },
-      { name: "Raul", age: 20 },
-      { name: "Sam", age: 24 },
+      { id: 1, name: "Jaime", age: 30 },
+      { id: 2, name: "Raul", age: 20 },
+      { id: 3, name: "Sam", age: 24 },
     ],
   });
 
@@ -29,20 +29,27 @@ function App() {
       ],
     });
   };
-
- const changeHandler = (e) => {
+*/
+  const changeHandler = (e, id) => {
+    //I need to know who is the user such name has been changed, so that's why I sent the id
+    const userIndex = peopleState.people.findIndex((p) => {
+      return p.id === id;
+    });
+    //Then I need a copy of the object
+    const someone = { ...peopleState.people[userIndex] };
+    someone.name = e.target.value; //the target is the input and that why I can't send the e.target.value and hope that had the userId
+    const peopleCopy = [...peopleState.people]; //Good practice
+    peopleCopy[userIndex] = someone;
     setPeople({
-      people: [
-        { name: "Susan", age: 40 },
-        { name: e.target.value, age: 19 },
-        { name: "Jhosseline", age: 25 },
-      ],
+      people: peopleCopy,
     });
   };
-*/
 
   const deleteUser = (user) => {
-    const copyOfPeople = peopleState.people;
+    //In this approach I'm just getting a pointer to the original to the original people array so this can lead to
+    //unpredictable apps and you should not use this
+    //const copyOfPeople = peopleState.people;
+    const copyOfPeople = [...peopleState.people]; //Good practice :), because I'm getting a fresh copy of people array that actually is not a pointer to the original people array
     copyOfPeople.splice(user, 1);
     setPeople({
       people: copyOfPeople,
@@ -70,9 +77,10 @@ function App() {
             return (
               <Person
                 click={() => deleteUser(index)}
-                key={index}
+                key={someone.id}
                 name={someone.name}
                 age={someone.age}
+                changed={(e) => changeHandler(e, someone.id)}
               />
             );
           })}
