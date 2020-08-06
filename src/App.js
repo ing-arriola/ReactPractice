@@ -8,12 +8,12 @@ import ValidationComponent from "./Practice2/ValidationComponent";
 import CharComponent from "./Practice2/CharComponent";
 
 const StyledButton = styled.button`
-  background: green;
+  background: ${(val) => (val.alt ? "green" : "red")};
   color: #fff;
   border: 1px solid #333;
   cursor: pointer;
   &:hover {
-    background: blue;
+    background: ${(val) => (val.alt ? "blue" : "salmon")};
   }
 `;
 function App() {
@@ -133,7 +133,9 @@ function App() {
   return (
     <div className="App">
       <h1 className={styles.join(" ")}>Super Practice app</h1>
-      <StyledButton onClick={togglePeople}>Toggle People</StyledButton>
+      <StyledButton alt={showPeople.showpeople.show} onClick={togglePeople}>
+        Toggle People
+      </StyledButton>
       {peopleToShow}
       <UserOutput myname={username.user.name} />
       <UserInput changed={userNameChangeHandler} />
