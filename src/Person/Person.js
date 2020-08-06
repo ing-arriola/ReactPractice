@@ -1,8 +1,14 @@
 import React from "react";
+import Radium from "radium";
 
 const Person = ({ name, age, children, click, changed }) => {
+  const fancyPerson = {
+    "@media (max-width: 500px)": {
+      color: "red",
+    },
+  };
   return (
-    <div>
+    <div style={fancyPerson}>
       <p onClick={click}>
         Hi, my name is {name} and my age is {age}
       </p>
@@ -12,4 +18,4 @@ const Person = ({ name, age, children, click, changed }) => {
   );
 };
 
-export default Person;
+export default Radium(Person);
