@@ -1,11 +1,21 @@
 import React, { useState } from "react";
 import "./App.css";
-import Radium, { StyleRoot } from "radium";
+import styled from "styled-components";
 import Person from "./Person/Person";
 import UserOutput from "./Person/UserOutput";
 import UserInput from "./Person/UserInput";
 import ValidationComponent from "./Practice2/ValidationComponent";
 import CharComponent from "./Practice2/CharComponent";
+
+const StyledButton = styled.button`
+  background: green;
+  color: #fff;
+  border: 1px solid #333;
+  cursor: pointer;
+  &:hover {
+    background: blue;
+  }
+`;
 function App() {
   const [peopleState, setPeople] = useState({
     people: [
@@ -90,14 +100,6 @@ function App() {
     });
   };
 
-  const styleButton = {
-    background: "green",
-    color: "#fff",
-    border: "1px solid #333",
-    cursor: "pointer",
-    ":hover": { background: "blue" },
-  };
-
   let peopleToShow = null;
 
   if (showPeople.showpeople.show) {
@@ -116,7 +118,7 @@ function App() {
         })}
       </div>
     );
-    styleButton.background = "red";
+    // styleButton.background = "red";
   }
 
   const styles = [];
@@ -129,34 +131,30 @@ function App() {
   }
 
   return (
-    <StyleRoot>
-      <div className="App">
-        <h1 className={styles.join(" ")}>Super Practice app</h1>
-        <button style={styleButton} onClick={togglePeople}>
-          Toggle People
-        </button>
-        {peopleToShow}
-        <UserOutput myname={username.user.name} />
-        <UserInput changed={userNameChangeHandler} />
-        <h2>Practice 2</h2>
-        <input onChange={getLength} value={justString.justSomeChars.join("")} />
-        <ValidationComponent tlength={lengthOfString.numChars.characters} />
-        {justString.justSomeChars.length > 0 ? (
-          <div>
-            {justString.justSomeChars.map((ch, index) => {
-              return (
-                <CharComponent
-                  key={index}
-                  char={ch}
-                  click={() => deleteChar(index)}
-                />
-              );
-            })}
-          </div>
-        ) : null}
-      </div>
-    </StyleRoot>
+    <div className="App">
+      <h1 className={styles.join(" ")}>Super Practice app</h1>
+      <StyledButton onClick={togglePeople}>Toggle People</StyledButton>
+      {peopleToShow}
+      <UserOutput myname={username.user.name} />
+      <UserInput changed={userNameChangeHandler} />
+      <h2>Practice 2</h2>
+      <input onChange={getLength} value={justString.justSomeChars.join("")} />
+      <ValidationComponent tlength={lengthOfString.numChars.characters} />
+      {justString.justSomeChars.length > 0 ? (
+        <div>
+          {justString.justSomeChars.map((ch, index) => {
+            return (
+              <CharComponent
+                key={index}
+                char={ch}
+                click={() => deleteChar(index)}
+              />
+            );
+          })}
+        </div>
+      ) : null}
+    </div>
   );
 }
 
-export default Radium(App);
+export default App;
