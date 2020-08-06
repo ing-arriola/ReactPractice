@@ -1,3 +1,11 @@
 .App {
   text-align: center;
 }
+
+.status-one {
+  color: green;
+}
+
+.status-two {
+  color: red;
+}

@@ -115,8 +115,18 @@ function App() {
     styleButton.background = "red";
   }
 
+  const styles = [];
+
+  if (peopleState.people.length <= 2) {
+    styles.push("status-one");
+  }
+  if (peopleState.people.length <= 1) {
+    styles.push("status-two");
+  }
+
   return (
     <div className="App">
+      <h1 className={styles.join(" ")}>Super Practice app</h1>
       <button style={styleButton} onClick={togglePeople}>
         Toggle People
       </button>
