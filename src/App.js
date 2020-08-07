@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import "./App.css";
 import styled from "styled-components";
-import Person from "./Person/Person";
-import UserOutput from "./Person/UserOutput";
-import UserInput from "./Person/UserInput";
-import ValidationComponent from "./Practice2/ValidationComponent";
-import CharComponent from "./Practice2/CharComponent";
+import Person from "./components/Person/Person";
+import Persons from "./components/Person/Persons";
+import UserOutput from "./components/Person/UserOutput";
+import UserInput from "./components/Person/UserInput";
+import ValidationComponent from "./components/Practice2/ValidationComponent";
+import CharComponent from "./components/Practice2/CharComponent";
 
 const StyledButton = styled.button`
-  background: ${(val) => (val.alt ? "green" : "red")};
+  background: ${(val) => (val.myAlt ? "green" : "red")};
+  };
   color: #fff;
   border: 1px solid #333;
   cursor: pointer;
@@ -91,7 +93,7 @@ function App() {
   const getLength = (e) => {
     let someString = e.target.value;
     let someChars = someString.split("");
-    console.log(someChars);
+    //console.log(someChars);
     setlengthOfString({
       numChars: { characters: e.target.value.length },
     });
@@ -105,17 +107,11 @@ function App() {
   if (showPeople.showpeople.show) {
     peopleToShow = (
       <div>
-        {peopleState.people.map((someone, index) => {
-          return (
-            <Person
-              click={() => deleteUser(index)}
-              key={someone.id}
-              name={someone.name}
-              age={someone.age}
-              changed={(e) => changeHandler(e, someone.id)}
-            />
-          );
-        })}
+        <Persons
+          somePeople={peopleState.people}
+          delet={deleteUser}
+          change={changeHandler}
+        />
       </div>
     );
     // styleButton.background = "red";
@@ -133,7 +129,7 @@ function App() {
   return (
     <div className="App">
       <h1 className={styles.join(" ")}>Super Practice app</h1>
-      <StyledButton alt={showPeople.showpeople.show} onClick={togglePeople}>
+      <StyledButton myAlt={showPeople.showpeople.show} onClick={togglePeople}>
         Toggle People
       </StyledButton>
       {peopleToShow}
